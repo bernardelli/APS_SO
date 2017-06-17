@@ -1,5 +1,5 @@
 #include "inRange.cuh"
-
+//#include <opencv2/cudalegacy.hpp>
 __global__ void inRange_kernel(const cv::cuda::PtrStepSz<uchar3> src, cv::cuda::PtrStepSzb dst,
                                int lbc0, int ubc0, int lbc1, int ubc1, int lbc2, int ubc2) {
   int x = blockIdx.x * blockDim.x + threadIdx.x;
