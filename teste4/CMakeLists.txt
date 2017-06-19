@@ -5,7 +5,7 @@ find_package( OpenCV REQUIRED )
 find_package( CUDA REQUIRED )
 include_directories ("${PROJECT_SOURCE_DIR}/src")
 
-set( CMAKE_C_FLAGS  -G)
+set( CMAKE_C_FLAGS  -O3)
 cuda_add_executable(
     bolinha
     ./src/main_bolinha.cpp
