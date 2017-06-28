@@ -8,6 +8,7 @@
 #include <opencv2/highgui.hpp>  // OpenCV window I/O
 #include <opencv2/shape.hpp>
 #include <unistd.h>
+#include "serial.h"
 
 
 using namespace std;
@@ -33,6 +34,25 @@ Point2f origin, y_vec;
 
 int main(int argc, char** argv )
 {
+
+
+    const char *portname = "/dev/ttyACM0";
+    int fd;
+    int wlen;
+
+    fd = open(portname, O_RDWR | O_NOCTTY | O_SYNC);
+    if (fd < 0) {
+        printf("Error opening %s: %s\n", portname, strerror(errno));
+        return -1;
+    }
+    /*baudrate 115200, 8 bits, no parity, 1 stop bit */
+    set_interface_attribs(fd, B115200);
+    //set_mincount(fd, 0);                /* set to pure timed read */
+
+
+
+
+
     video_capture.open(1);
 
 
@@ -74,7 +94,17 @@ int main(int argc, char** argv )
         //
 
 
-        float altura = calc_position(frame);
+        int altura = (int) 1024*calc_position(frame);
+        altura = (altura > 1024)? 1024: altura;
+        altura = (altura < 0)? 0 : altura;
+
+        wlen = send_position(fd, altura);
+
+        if (wlen != sizeof(uint16_t))
+        {
+            printf("Error sending bytes\n");
+        }
+
         cout << "posicao: " << altura << endl;
         waitKey(1);
 

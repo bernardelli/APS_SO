@@ -9,6 +9,7 @@ set( CMAKE_C_FLAGS  -O3)
 cuda_add_executable(
     bolinha
     ./src/main_bolinha.cpp
+    ./src/serial.cpp
 
 )
 
