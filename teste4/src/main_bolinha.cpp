@@ -47,7 +47,7 @@ int main(int argc, char** argv )
     Size video_size = Size((int) video_capture.get(CAP_PROP_FRAME_WIDTH),
                      (int) video_capture.get(CAP_PROP_FRAME_HEIGHT));
 
-
+    cout << "size x: " << video_size.width << " size y: " << video_size.height << endl;
 
     //namedWindow("video", WINDOW_GUI_NORMAL);
     //namedWindow("debug1", WINDOW_GUI_NORMAL);
