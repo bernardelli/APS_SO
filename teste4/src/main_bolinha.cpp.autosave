@@ -66,7 +66,7 @@ int main(int argc, char** argv )
     /*** open video ***/
     video_capture.open(1);
 
-    video_capture.set(CV_CAP_PROP_FPS, 60);
+    //video_capture.set(CV_CAP_PROP_FPS, 60);
 
     if (!video_capture.isOpened())
     {

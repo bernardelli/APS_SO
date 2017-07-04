@@ -13,6 +13,8 @@ cuda_add_executable(
 
 )
 
+add_definitions(-std=c++11)
+
 
 
 target_link_libraries(bolinha ${OpenCV_LIBS})
