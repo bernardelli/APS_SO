@@ -75,11 +75,11 @@ int main(int argc, char** argv )
 
 
     /*Create windows*/
-    //namedWindow("video", WINDOW_GUI_NORMAL);
-    //namedWindow("debug1", WINDOW_GUI_NORMAL);
-    //namedWindow("debug2", WINDOW_GUI_NORMAL);
+    namedWindow("video", WINDOW_GUI_NORMAL);
+    namedWindow("debug1", WINDOW_GUI_NORMAL);
+    namedWindow("debug2", WINDOW_GUI_NORMAL);
     //namedWindow("undistort", WINDOW_GUI_NORMAL);
-    namedWindow("debug3", WINDOW_GUI_NORMAL);
+    //namedWindow("debug3", WINDOW_GUI_NORMAL);
 
 
     for(int i = 0; i < NVIDEOS; i++)
@@ -100,14 +100,14 @@ int main(int argc, char** argv )
         strcpy(log_filename, videofiles[i]);
         strcpy(log_filename + strlen(videofiles[i])-5, logfile_end);
         
-        FILE * f_log = fopen (log_filename, "w");
+        //FILE * f_log = fopen (log_filename, "w");
         
         cout << "creating log file " << log_filename << endl;
         
-        if (f_log == nullptr)
-        {
-           perror("cant create log file\n");
-        }
+        //if (f_log == nullptr)
+        //{
+        //   perror("cant create log file\n");
+        //}
 
         video_capture.set(CV_CAP_PROP_POS_FRAMES, 0);
 
@@ -118,7 +118,7 @@ int main(int argc, char** argv )
             video_capture >> frame;
 
             //undistort(frame, view, cameraMatrix, distCoeffs);
-            //imshow("undistort", view);
+            imshow("video", frame);
 
             if (frame.empty())
             {
@@ -134,17 +134,17 @@ int main(int argc, char** argv )
 
             
             /**write to file**/
-            fprintf(f_log, "%d, ", altura);
+            //fprintf(f_log, "%d, ", altura);
 
 
 
-            waitKey(1);
+            waitKey(0);
 
 
 
         }
-        fprintf(f_log, "\n");
-        fclose(f_log);
+        //fprintf(f_log, "\n");
+        //fclose(f_log);
 
     }
 
@@ -329,9 +329,11 @@ float calc_position(Mat& frame)
     erode(yellow_mask, yellow_mask, element_P);
     dilate(yellow_mask, yellow_mask, element_M);
     dilate(yellow_mask, yellow_mask, element_M);
-    //imshow("debug2", yellow_mask);
+
 
     bitwise_and(mask, yellow_mask, yellow_mask);
+
+    imshow("debug1", yellow_mask);
     Moments m = moments(yellow_mask, false);
     Point2f p1(m.m10/m.m00, m.m01/m.m00);
 
@@ -341,7 +343,7 @@ float calc_position(Mat& frame)
     {
         Scalar color(0, 0, 255);
         circle(frame, Point(int(p1.x), int(p1.y)), 20, color, 4);
-        imshow("debug3", frame);
+        imshow("debug2", frame);
 
         position= convert_to_height(p1);
     }
